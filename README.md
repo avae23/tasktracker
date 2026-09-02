@@ -94,7 +94,30 @@ src/
 
 - **GitHub Pages** — запушить `dist/` в ветку `gh-pages` или собрать в Actions.
 - **Netlify / Vercel** — команда сборки `npm run build`, каталог публикации `dist`.
-- **Свой сервер** — скопировать содержимое `dist/` в корень сайта.
+- **Свой сервер** — см. ниже.
+
+### Свой сервер с nginx
+
+В папке `deploy/` лежит готовый сценарий: он раскладывает сборку в
+`/var/www/tracker` и включает отдельный сайт, не трогая остальные.
+
+```bash
+npm run build
+tar -czf tracker-dist.tar.gz -C dist .
+scp tracker-dist.tar.gz deploy/deploy.sh deploy/nginx-tracker.conf root@СЕРВЕР:/tmp/
+ssh root@СЕРВЕР "cd /tmp && bash deploy.sh /tmp/tracker-dist.tar.gz"
+```
+
+Скрипт создаёт только свой конфиг, перед перезагрузкой проверяет `nginx -t`
+и откатывает изменения, если проверка не прошла — соседние сайты остаются целы.
+Прошлая версия трекера сохраняется в `/var/www/tracker.old`, откат:
+
+```bash
+rm -rf /var/www/tracker && mv /var/www/tracker.old /var/www/tracker && systemctl reload nginx
+```
+
+Домен и каталог меняются переменными: `DOMAIN=… ROOT=… bash deploy.sh …`.
+HTTPS — `certbot --nginx -d ваш.домен` после первой выкладки.
 
 Обычную сборку нужно отдавать по http: скрипт подключается как модуль, а модули
 браузер не грузит с `file://`. Если хочется просто двойного клика по файлу —
