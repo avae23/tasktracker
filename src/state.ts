@@ -52,6 +52,7 @@ export function normalize(raw: Partial<Task> & { id: string }): Task {
     order: typeof raw.order === "number" ? raw.order : 0,
     created: raw.created ?? new Date().toISOString(),
     doneAt: raw.doneAt ?? null,
+    ...(raw.source ? { source: raw.source } : {}),
   };
 }
 

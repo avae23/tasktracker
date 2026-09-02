@@ -5,3 +5,4 @@ dist/
 .vite/
 dist-single/
 tracker-dist.tar.gz
+claude-tasks.json

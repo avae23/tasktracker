@@ -16,6 +16,12 @@ export interface Subtask {
   done: boolean;
 }
 
+/** Откуда задача приехала: нужно, чтобы повторная выгрузка обновляла, а не дублировала. */
+export interface TaskSource {
+  kind: "claude-code";
+  key: string;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -34,6 +40,8 @@ export interface Task {
   created: string;
   /** ISO-время выполнения */
   doneAt: string | null;
+  /** заполнено, если задача создана выгрузкой, а не руками */
+  source?: TaskSource;
 }
 
 export interface Project {
