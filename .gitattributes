@@ -1,0 +1,5 @@
+# В репозитории и в рабочей копии — только LF.
+# Иначе deploy.sh уезжает на сервер с CRLF и bash спотыкается на shebang.
+* text=auto eol=lf
+*.sh   text eol=lf
+*.conf text eol=lf
