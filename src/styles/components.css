@@ -138,3 +138,19 @@ kbd{
   font:inherit;font-size:10.5px;border:1px solid var(--border-mid);border-bottom-width:2px;
   border-radius:4px;padding:0 4px;color:var(--text-faint)
 }
+
+/* ============ предупреждение о хранилище ============ */
+.warn-bar{
+  position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;
+  display:flex;align-items:flex-start;gap:12px;max-width:min(560px,92vw);
+  padding:11px 14px;border-radius:8px;
+  background:var(--c-yellow-bg);color:var(--c-yellow-fg);
+  border:1px solid currentColor;box-shadow:var(--shadow-2);
+  font-size:13px;line-height:1.45
+}
+.warn-bar code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  background:color-mix(in srgb,currentColor 15%,transparent);padding:1px 4px;border-radius:3px
+}
+.warn-bar button{font-size:16px;line-height:1;color:inherit;opacity:.7;padding:0 2px}
+.warn-bar button:hover{opacity:1}

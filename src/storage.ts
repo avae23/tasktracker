@@ -21,6 +21,26 @@ export function lsSet(key: string, value: string): void {
   }
 }
 
+let available: boolean | null = null;
+
+/**
+ * Доступно ли хранилище на самом деле. Приватные окна, отключённые cookies
+ * и открытие файла с диска в некоторых браузерах молча ломают запись —
+ * трекер обязан об этом предупредить, а не терять задачи.
+ */
+export function storageAvailable(): boolean {
+  if (available !== null) return available;
+  const probe = "tracker.probe";
+  try {
+    localStorage.setItem(probe, "1");
+    available = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+  } catch {
+    available = false;
+  }
+  return available;
+}
+
 /** Куда складываются задачи. Сейчас есть только браузерное хранилище. */
 export interface StorageAdapter {
   readonly name: string;

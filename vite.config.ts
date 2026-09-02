@@ -1,8 +1,12 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  // relative base so the build works from any path (GitHub Pages, a subfolder, file://)
+  // относительный base: сборка работает и из подпапки (GitHub Pages), и локально
   base: "./",
   server: { port: 5173 },
-  build: { target: "es2022", outDir: "dist" },
+  build: {
+    target: "es2022",
+    outDir: "dist",
+    emptyOutDir: true,
+  },
 });
