@@ -1,0 +1,119 @@
+/* ============ tokens ============ */
+:root{
+  color-scheme: light;
+  --bg:#ffffff;
+  --bg-side:#f7f7f5;
+  --bg-sunken:#fbfbfa;
+  --bg-hover:rgba(55,53,47,.06);
+  --bg-active:rgba(55,53,47,.10);
+  --bg-card:#ffffff;
+  --text:#37352f;
+  --text-mid:#6b6a65;
+  --text-faint:#9b9a97;
+  --border:#eae9e5;
+  --border-mid:#dcdbd7;
+  --accent:#2383e2;
+  --accent-soft:rgba(35,131,226,.12);
+  --danger:#c4554d;
+  --shadow-1:0 1px 2px rgba(15,15,15,.06),0 3px 8px rgba(15,15,15,.06);
+  --shadow-2:0 6px 28px rgba(15,15,15,.12),0 2px 6px rgba(15,15,15,.08);
+  --scrim:rgba(15,15,15,.28);
+
+  --c-gray-bg:#f1f1ef;   --c-gray-fg:#5f5e5b;
+  --c-brown-bg:#f4eeee;  --c-brown-fg:#8f6a58;
+  --c-orange-bg:#fbecdd; --c-orange-fg:#b8642a;
+  --c-yellow-bg:#fbf3db; --c-yellow-fg:#a37a2c;
+  --c-green-bg:#edf3ec;  --c-green-fg:#4b7d5d;
+  --c-blue-bg:#e7f3f8;   --c-blue-fg:#3d7599;
+  --c-purple-bg:#f4f0f7; --c-purple-fg:#7f5ea3;
+  --c-pink-bg:#faf1f5;   --c-pink-fg:#a94c7f;
+  --c-red-bg:#fdebec;    --c-red-fg:#bd4c44;
+
+  --viz-doing:#2383e2; --viz-done:#008300; --viz-todo:#8b8a86; --viz-crit:#c4554d;
+  --viz-mute:#dcdbd7; --viz-track:#eae9e5;
+  --viz-r1:#86b6ef; --viz-r2:#2a78d6; --viz-r3:#1c5cab;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#191919;
+    --bg-side:#202020;
+    --bg-sunken:#1c1c1c;
+    --bg-hover:rgba(255,255,255,.055);
+    --bg-active:rgba(255,255,255,.10);
+    --bg-card:#242424;
+    --text:#d6d5d2;
+    --text-mid:#9d9c98;
+    --text-faint:#78776f;
+    --border:#2e2e2c;
+    --border-mid:#3a3a37;
+    --accent:#529cca;
+    --accent-soft:rgba(82,156,202,.16);
+    --danger:#df5452;
+    --shadow-1:0 1px 2px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.28);
+    --shadow-2:0 8px 32px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.4);
+    --scrim:rgba(0,0,0,.5);
+
+    --c-gray-bg:#373737;   --c-gray-fg:#a5a5a2;
+    --c-brown-bg:#3a2f2a;  --c-brown-fg:#ba8c73;
+    --c-orange-bg:#3d2c1d; --c-orange-fg:#d99b57;
+    --c-yellow-bg:#3b3020; --c-yellow-fg:#d3ad57;
+    --c-green-bg:#22332a;  --c-green-fg:#7cb891;
+    --c-blue-bg:#1e3241;   --c-blue-fg:#7ab4dc;
+    --c-purple-bg:#2f2839; --c-purple-fg:#ac8fd0;
+    --c-pink-bg:#3a2632;   --c-pink-fg:#d585ac;
+    --c-red-bg:#3d2523;    --c-red-fg:#e08b84;
+
+    --viz-doing:#529cca; --viz-done:#008300; --viz-todo:#77766f; --viz-crit:#df5452;
+    --viz-mute:#3a3a37; --viz-track:#2e2e2c;
+    --viz-r1:#256abf; --viz-r2:#3987e5; --viz-r3:#9ec5f4;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#191919;
+  --bg-side:#202020;
+  --bg-sunken:#1c1c1c;
+  --bg-hover:rgba(255,255,255,.055);
+  --bg-active:rgba(255,255,255,.10);
+  --bg-card:#242424;
+  --text:#d6d5d2;
+  --text-mid:#9d9c98;
+  --text-faint:#78776f;
+  --border:#2e2e2c;
+  --border-mid:#3a3a37;
+  --accent:#529cca;
+  --accent-soft:rgba(82,156,202,.16);
+  --danger:#df5452;
+  --shadow-1:0 1px 2px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.28);
+  --shadow-2:0 8px 32px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.4);
+  --scrim:rgba(0,0,0,.5);
+
+  --c-gray-bg:#373737;   --c-gray-fg:#a5a5a2;
+  --c-brown-bg:#3a2f2a;  --c-brown-fg:#ba8c73;
+  --c-orange-bg:#3d2c1d; --c-orange-fg:#d99b57;
+  --c-yellow-bg:#3b3020; --c-yellow-fg:#d3ad57;
+  --c-green-bg:#22332a;  --c-green-fg:#7cb891;
+  --c-blue-bg:#1e3241;   --c-blue-fg:#7ab4dc;
+  --c-purple-bg:#2f2839; --c-purple-fg:#ac8fd0;
+  --c-pink-bg:#3a2632;   --c-pink-fg:#d585ac;
+  --c-red-bg:#3d2523;    --c-red-fg:#e08b84;
+
+  --viz-doing:#529cca; --viz-done:#008300; --viz-todo:#77766f; --viz-crit:#df5452;
+  --viz-mute:#3a3a37; --viz-track:#2e2e2c;
+  --viz-r1:#256abf; --viz-r2:#3987e5; --viz-r3:#9ec5f4;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input,textarea{font:inherit;color:inherit;background:none;border:0;outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
+::selection{background:var(--accent-soft)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

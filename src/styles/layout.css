@@ -1,0 +1,87 @@
+/* ============ shell ============ */
+.app{display:flex;height:100dvh;overflow:hidden}
+
+.sidebar{
+  width:248px;flex:0 0 248px;background:var(--bg-side);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;min-height:0;
+}
+.side-head{display:flex;align-items:center;gap:8px;padding:12px 10px 8px 14px}
+.ws-mark{
+  width:22px;height:22px;flex:0 0 22px;border-radius:5px;
+  background:linear-gradient(150deg,var(--accent),color-mix(in srgb,var(--accent) 55%, var(--c-purple-fg)));
+  color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700
+}
+.ws-name{font-weight:600;font-size:14px;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-sub{font-size:11px;color:var(--text-faint);margin-top:-2px}
+.side-scroll{flex:1;overflow-y:auto;padding:4px 8px 12px;min-height:0}
+.side-label{
+  font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--text-faint);padding:14px 6px 4px;display:flex;align-items:center;justify-content:space-between
+}
+.nav{
+  display:flex;align-items:center;gap:8px;width:100%;
+  padding:6px 8px;border-radius:6px;color:var(--text-mid);
+  font-size:14px;font-weight:500;text-align:left;
+}
+.nav:hover{background:var(--bg-hover)}
+.nav.is-on{background:var(--bg-active);color:var(--text)}
+.nav .ic{width:17px;flex:0 0 17px;display:grid;place-items:center;color:var(--text-faint)}
+.nav.is-on .ic{color:var(--text-mid)}
+.nav .lbl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav .cnt{font-size:12px;color:var(--text-faint);font-variant-numeric:tabular-nums}
+.dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
+.side-foot{border-top:1px solid var(--border);padding:10px 14px 12px}
+.meter{height:5px;border-radius:99px;background:var(--bg-active);overflow:hidden;margin:7px 0 6px}
+.meter i{display:block;height:100%;background:var(--c-green-fg);border-radius:99px;transition:width .35s ease}
+.foot-row{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint)}
+.foot-row b{color:var(--text-mid);font-weight:600;font-variant-numeric:tabular-nums}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.topbar{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;
+  border-bottom:1px solid var(--border);flex:0 0 auto;
+}
+.crumb{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--text-mid);min-width:0;
+  overflow:hidden;white-space:nowrap}
+.crumb b,.crumb span{overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.crumb .sep{color:var(--text-faint)}
+.search{
+  display:flex;align-items:center;gap:6px;background:var(--bg-hover);
+  border-radius:6px;padding:5px 9px;min-width:150px;max-width:260px;flex:1
+}
+.search input{width:100%;font-size:13.5px}
+.search input::placeholder{color:var(--text-faint)}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:6px;
+  font-size:13.5px;font-weight:500;color:var(--text-mid);white-space:nowrap
+}
+.btn:hover{background:var(--bg-hover);color:var(--text)}
+.btn.is-on{background:var(--bg-active);color:var(--text)}
+.btn--primary{background:var(--accent);color:#fff;font-weight:600;box-shadow:var(--shadow-1)}
+.btn--primary:hover{background:var(--accent);color:#fff;filter:brightness(1.06)}
+.icon-btn{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;color:var(--text-mid)}
+.icon-btn:hover{background:var(--bg-hover);color:var(--text)}
+.burger{display:none}
+
+.page-head{padding:26px 42px 0;flex:0 0 auto}
+.page-title{
+  font-family:"Source Serif 4",Georgia,serif;font-weight:600;
+  font-size:34px;line-height:1.15;letter-spacing:-.015em;margin:0;text-wrap:balance
+}
+.page-sub{color:var(--text-faint);font-size:13.5px;margin-top:6px}
+.tabs{display:flex;align-items:center;gap:2px;margin-top:16px;border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  padding:6px 8px 9px;font-size:13.5px;font-weight:500;color:var(--text-faint);
+  border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:6px
+}
+.tab:hover{color:var(--text-mid)}
+.tab.is-on{color:var(--text);border-bottom-color:var(--text)}
+.tabs .spacer{flex:1}
+.tabs .btn{margin-bottom:4px}
+
+.scroll{flex:1;overflow:auto;min-height:0}
+.pad{padding:14px 42px 90px}
