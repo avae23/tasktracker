@@ -61,6 +61,9 @@ export function renderSidebar(): void {
     `<button class="nav" data-act="sync-claude"><span class="ic">${svg("chart", 15)}</span>` +
     '<span class="lbl">Подтянуть из Claude Code</span></button>';
   html +=
+    `<button class="nav" data-act="keep-synced"><span class="ic">${svg("trash", 15)}</span>` +
+    '<span class="lbl">Оставить только выгрузку</span></button>';
+  html +=
     `<button class="nav" data-act="export-json"><span class="ic">${svg("download", 15)}</span>` +
     '<span class="lbl">Сохранить резервную копию</span></button>';
   html +=

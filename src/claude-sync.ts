@@ -147,6 +147,47 @@ export function applySync(file: SyncFile): Result {
   return result;
 }
 
+/**
+ * Оставляет только задачи, пришедшие из выгрузки, и убирает опустевшие проекты.
+ * Действие необратимо, поэтому спрашивает подтверждение и называет числа.
+ */
+export function keepOnlySynced(): void {
+  const all = Object.values(state.tasks);
+  const doomed = all.filter((t) => t.source?.kind !== "claude-code");
+
+  if (!doomed.length) {
+    window.alert("Удалять нечего: все задачи и так из выгрузки.");
+    return;
+  }
+
+  const stays = all.length - doomed.length;
+  const confirmed = window.confirm(
+    [
+      `Удалить ${doomed.length} задач, не пришедших из выгрузки?`,
+      "",
+      `Останется: ${stays}.`,
+      "Проекты, в которых после этого не останется задач, тоже пропадут.",
+      "",
+      "Отменить будет нельзя. Если нужна страховка — сначала «Сохранить резервную копию».",
+    ].join("\n"),
+  );
+  if (!confirmed) return;
+
+  doomed.forEach((t) => {
+    delete state.tasks[t.id];
+  });
+
+  const used = new Set(Object.values(state.tasks).map((t) => t.project));
+  state.projects = state.projects.filter((p) => used.has(p.id));
+
+  state.ui.peek = null;
+  state.ui.project = null;
+  persist();
+  bus.render();
+
+  window.alert(`Удалено задач: ${doomed.length}. Осталось: ${Object.keys(state.tasks).length}.`);
+}
+
 export function importClaudeSync(): void {
   const input = document.createElement("input");
   input.type = "file";

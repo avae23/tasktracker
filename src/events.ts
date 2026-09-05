@@ -1,6 +1,6 @@
 import { closeSidebar, newTaskFlow, render, toggleSidebar } from "./app";
 import { GROUP_LABELS, SORT_LABELS } from "./constants";
-import { importClaudeSync } from "./claude-sync";
+import { importClaudeSync, keepOnlySynced } from "./claude-sync";
 import { copyMarkdown, exportJSON, importJSON } from "./exporters";
 import { persist, state } from "./state";
 import {
@@ -66,6 +66,9 @@ function bindClicks(): void {
         return;
       case "sync-claude":
         importClaudeSync();
+        return;
+      case "keep-synced":
+        keepOnlySynced();
         return;
       case "period":
         state.ui.period = Number(action.dataset.n);
