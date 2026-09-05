@@ -123,6 +123,44 @@ src/
 - **Netlify / Vercel** — команда сборки `npm run build`, каталог публикации `dist`.
 - **Свой сервер** — см. ниже.
 
+### Рядом с чужим Caddy (текущая установка)
+
+Трекер живёт на `tracker.avdeevalexandr.ru` за паролем, на сервере, где уже
+работает n8n со своим Caddy на портах 80 и 443. Чтобы ничего не ломать, сайт
+добавлен рядом, а не внутрь проекта n8n:
+
+- статика лежит в `/opt/tracker/site`;
+- её отдаёт отдельный контейнер `tracker-static` в сети `n8n_web`
+  (`caddy file-server`), он не входит в compose-проект n8n и не пересоздаётся вместе с ним;
+- в `/opt/n8n/Caddyfile` дописан **отдельный** блок, блок n8n не тронут:
+
+```
+tracker.avdeevalexandr.ru {
+    basic_auth {
+        логин <bcrypt-хеш>
+    }
+    encode zstd gzip
+    reverse_proxy tracker-static:80
+}
+```
+
+Обновить сайт после изменений:
+
+```bash
+npm run build && tar -czf tracker-dist.tar.gz -C dist . && scp tracker-dist.tar.gz root@СЕРВЕР:/tmp/ && ssh root@СЕРВЕР "rm -rf /opt/tracker/site/* && tar -xzf /tmp/tracker-dist.tar.gz -C /opt/tracker/site"
+```
+
+Перезапускать контейнер не нужно — он отдаёт файлы с примонтированной папки.
+
+Пароль хранится в Caddyfile только как bcrypt-хеш. Сменить:
+
+```bash
+docker run --rm caddy:2 caddy hash-password --plaintext 'НОВЫЙ_ПАРОЛЬ'
+```
+
+и заменить хеш в блоке, затем `docker exec n8n-caddy-1 caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile`.
+Перед правкой копия конфига лежит рядом: `/opt/n8n/Caddyfile.bak.*`.
+
 ### Свой сервер с nginx
 
 В папке `deploy/` лежит готовый сценарий: он раскладывает сборку в
