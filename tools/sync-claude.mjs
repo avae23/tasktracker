@@ -54,6 +54,35 @@ function parseLines(lines) {
   return out;
 }
 
+/**
+ * Маскирует то, что похоже на ключи и токены.
+ *
+ * В файлах сессий они лежат открытым текстом: люди вставляют их прямо в чат.
+ * Без этой чистки ключ уехал бы в заметку задачи, оттуда в резервную копию,
+ * а её легко переслать. Лучше перестраховаться и замазать лишнее.
+ */
+const SECRETS = [
+  [/\d{8,12}:AA[\w-]{30,}/g, "«ключ скрыт»"],                 // токен телеграм-бота
+  [/sk-[A-Za-z0-9_-]{20,}/g, "«ключ скрыт»"],                  // OpenAI, OpenRouter, DeepSeek
+  [/AQVN[\w-]{20,}/g, "«ключ скрыт»"],                         // Яндекс Облако
+  [/AIza[\w-]{30,}/g, "«ключ скрыт»"],                         // Google API
+  [/eyJ[\w-]{8,}\.[\w-]{8,}\.[\w-]{8,}/g, "«ключ скрыт»"],    // JWT
+  [/ghp_[A-Za-z0-9]{20,}/g, "«ключ скрыт»"],                   // GitHub
+  [/[a-f0-9]{32}/g, "«ключ скрыт»"],                       // 32 hex — обычный вид ключа
+  // «api_key: значение» — хвост ограничен, чтобы не съесть кавычку и не сломать JSON
+  [/((?:api[_-]?key|token|secret|password|пароль)\s*[=:]\s*)[^\s",}]+/gi, "$1«скрыто»"],
+];
+
+/**
+ * Заменяет строковыми шаблонами, а не функцией: у replace без групп захвата
+ * вторым аргументом приходит позиция совпадения, и callback легко ошибиться.
+ */
+function redact(text) {
+  let out = String(text);
+  for (const [re, replacement] of SECRETS) out = out.replace(re, replacement);
+  return out;
+}
+
 /** Текст реплики пользователя; служебные вставки в угловых скобках отбрасываем. */
 function userText(record) {
   const content = record?.message?.content;
@@ -96,7 +125,7 @@ function collectProject(dir) {
 
   for (const record of parseLines(readChunk(newest, HEAD_BYTES, false))) {
     if (record.type === "custom-title" || record.type === "summary") {
-      title = record.title || record.summary || title;
+      title = redact(record.title || record.summary || title || "");
     }
     cwd ||= record.cwd;
   }
@@ -106,11 +135,11 @@ function collectProject(dir) {
     branch ||= record.gitBranch;
     if (record.timestamp) lastActivity = record.timestamp;
     if (record.type === "custom-title" || record.type === "summary") {
-      title = record.title || record.summary || title;
+      title = redact(record.title || record.summary || title || "");
     }
     if (record.type === "user") {
       const text = userText(record);
-      if (text && prompts.at(-1) !== text) prompts.push(text);
+      if (text && prompts.at(-1) !== text) prompts.push(redact(text));
     }
   }
 
